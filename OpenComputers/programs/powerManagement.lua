@@ -122,13 +122,13 @@ while nCycles <= 10 do
     print('Hughmungus on standby')
   end
   print()
-  print'(Berthas running time relative: ' .. tostring(math.floor(berthasOnAVG*100)/100) .. '%')
-  print'(Berthas running time AVG Day: ' .. tostring(math.floor(berthasOnAVGDay*100)/100) .. '%')
-  print'(Berthas running time AVG Week: ' .. tostring(math.floor(berthasOnAVGWeek*100)/100) .. '%')
+  print('Berthas running time relative: ' .. tostring(math.floor(berthasOnAVG*100)/100))
+  print('Berthas running time AVG Day: ' .. tostring(math.floor(berthasOnAVGDay*100)/100))
+  print('Berthas running time AVG Week: ' .. tostring(math.floor(berthasOnAVGWeek*100)/100) .. '%')
   print()
-  print'(Hughmungus running time relative: ' .. tostring(math.floor(hughmungusOnAVG*100)/100) .. '%')
-  print'(Hughmungus running time AVG Day: ' .. tostring(math.floor(hughmungusOnAVGDay*100)/100) .. '%')
-  print'(Hughmungus running time AVG Week: ' .. tostring(math.floor(hughmungusOnAVGWeek*100)/100) .. '%')
+  print('Hughmungus running time relative: ' .. tostring(math.floor(hughmungusOnAVG*100)/100) .. '%')
+  print('Hughmungus running time AVG Day: ' .. tostring(math.floor(hughmungusOnAVGDay*100)/100) .. '%')
+  print('Hughmungus running time AVG Week: ' .. tostring(math.floor(hughmungusOnAVGWeek*100)/100) .. '%')
   berthasOnOld = berthasOn
   hughmungusOnOld = hughmungusOn
   nCycles = nCycles + 1
