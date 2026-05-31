@@ -63,7 +63,15 @@ while nCycles <= 4 do
   hughmungusOn = 0
   hughmungusRedstoneStrength = 0
   end
-
+ --Bewegtes Fenster
+  --Wirf letztes Element raus und schiebe alles um 1
+  for i = 0, (N-2) do
+    z = N-2 - i
+    berthasOnCyclesWeek[z+1] = berthasOnCyclesWeek[z]
+    hughmungusOnCyclesWeek[z+1] = hughmungusOnCyclesWeek[z]
+  end
+  berthasOnCyclesWeek[0] = berthasOn
+  hughmungusOnCyclesWeek[0] = hughmungusOn
   --Berechne Standzeiten
   berthasOnCycles = berthasOnCycles + berthasOn
   hughmungusOnCycles = hughmungusOnCycles + hughmungusOn
@@ -77,7 +85,7 @@ while nCycles <= 4 do
   for i = 0, (N1-1) do
     berthasOnDay = berthasOnDay + berthasOnCyclesWeek[i]
     hughmungusOnDay = hughmungusOnDay + hughmungusOnCyclesWeek[i]
-	if i == (nCycles-1) then break end
+    if i == (nCycles-1) then break end
   end
   dayDiv = N1
   if nCycles < N1 then
@@ -91,7 +99,7 @@ while nCycles <= 4 do
   for i = 0, (N-1) do
     berthasOnWeek = berthasOnWeek + berthasOnCyclesWeek[i]
     hughmungusOnWeek = hughmungusOnWeek + hughmungusOnCyclesWeek[i]
-	if i == (nCycles-1) then break end
+    if i == (nCycles-1) then break end
   end
   weekDiv = N
   if nCycles < N then
@@ -99,15 +107,6 @@ while nCycles <= 4 do
   end
   berthasOnAVGWeek = berthasOnWeek / weekDiv * 100
   hughmungusOnAVGWeek = hughmungusOnWeek / weekDiv * 100
-  --Bewegtes Fenster
-  --Wirf letztes Element raus und schiebe alles um 1
-  for i = 0, (N-2) do
-    z = N-2 - i
-    berthasOnCyclesWeek[z+1] = berthasOnCyclesWeek[z]
-    hughmungusOnCyclesWeek[z+1] = hughmungusOnCyclesWeek[z]
-  end
-  berthasOnCyclesWeek[0] = berthasOn
-  hughmungusOnCyclesWeek[0] = hughmungusOn
   --Status melden
   if berthasOn == 1 then
     if berthasOn ~= berthasOnOld then
