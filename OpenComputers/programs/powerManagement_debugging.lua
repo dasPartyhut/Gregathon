@@ -115,7 +115,7 @@ while nCycles <= 10 do
   else
     if hughmungusOn ~= hughmungusOnOld then
       print('Turning off Dicker Gustav')
-	end
+    end
     print('Dicker Gustav on standby')
   end
   --Statistik Anzeigen
