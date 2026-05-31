@@ -113,6 +113,7 @@ while nCycles <= 10 do
       print('Turning off the Berthas')
     end
     print('Berthas on standby')
+  end
   if hughmungusOn == 1 then
     if hughmungusOn ~= hughmungusOnOld then
       print('Turning on Dicker Gustav')
@@ -121,7 +122,7 @@ while nCycles <= 10 do
   else
     if hughmungusOn ~= hughmungusOnOld then
       print('Turning off Dicker Gustav')
-	end
+    end
     print('Dicker Gustav on standby')
   end
   --Redstone Werte Setzen
