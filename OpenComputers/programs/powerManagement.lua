@@ -124,7 +124,6 @@ while nCycles <= 10 do
       print('Turning off Dicker Gustav')
 	end
       print('Dicker Gustav on standby')
-    end
   end
   --Redstone Werte Setzen
   rsBerthas.setOutput(sides.left, berthasRedstoneStrength)
