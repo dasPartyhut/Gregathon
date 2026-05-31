@@ -77,18 +77,28 @@ while nCycles <= 4 do
   for i = 0, (N1-1) do
     berthasOnDay = berthasOnDay + berthasOnCyclesWeek[i]
     hughmungusOnDay = hughmungusOnDay + hughmungusOnCyclesWeek[i]
+	if i == (nCycles-1) then break end
   end
-  berthasOnAVGDay = berthasOnDay / N1 * 100
-  hughmungusOnAVGDay = hughmungusOnDay / N1 * 100
+  dayDiv = N1
+  if nCycles < N1 then
+    dayDiv = nCycles  
+  end
+  berthasOnAVGDay = berthasOnDay / daydiv * 100
+  hughmungusOnAVGDay = hughmungusOnDay / daydiv * 100
   --Berechne Standzeit von der letzten Woche  
   berthasOnWeek = 0
   hughmungusOnWeek = 0
   for i = 0, (N-1) do
     berthasOnWeek = berthasOnWeek + berthasOnCyclesWeek[i]
     hughmungusOnWeek = hughmungusOnWeek + hughmungusOnCyclesWeek[i]
+	if i == (nCycles-1) then break end
   end
-  berthasOnAVGWeek = berthasOnWeek / N * 100
-  hughmungusOnAVGWeek = hughmungusOnWeek / N * 100
+  weekDiv = N
+  if nCycles < N then
+    weekDiv = nCycles
+  end
+  berthasOnAVGWeek = berthasOnWeek / weekDiv * 100
+  hughmungusOnAVGWeek = hughmungusOnWeek / weekDiv * 100
   --Bewegtes Fenster
   --Wirf letztes Element raus und schiebe alles um 1
   for i = 0, (N-2) do
