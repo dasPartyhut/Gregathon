@@ -4,7 +4,7 @@ local sides = require('sides')
 local term = require('term')
 local rsCapacitor = component.proxy(component.get("d7be4779"))
 local rsBerthas = component.proxy(component.get("31360f7e"))
-local rs Hughmungus = component.proxy(component.get("be40fe8f"))
+local rsHughmungus = component.proxy(component.get("be40fe8f"))
 
 -- Takt Zyklus und Zeit-Konstanten
 local WAITTIME = 60 --takt-zyklus 1min
@@ -87,8 +87,8 @@ while 1 do
   hughmungusOnCycles = hughmungusOnCycles + hughmungusOn
   --Berechne mittlere Standzeiten
   -- + 1e-12 verhindert 0/0
-  berthasOnAVG = berthasOnCycles / (nCycles + 1e-12) * 100  
-  hughmungusOnAVG = hughmungusOnCycles / (nCycles + 1e-12) * 100
+  berthasOnAVG = berthasOnCycles / nCycles * 100  
+  hughmungusOnAVG = hughmungusOnCycles / nCycles * 100
   --Berechne Standzeit vom letzten Tag  
   berthasOnDay = 0
   hughmungusOnDay = 0
