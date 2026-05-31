@@ -106,24 +106,23 @@ while nCycles <= 10 do
   if berthasOn == 1 then
     if berthasOn ~= berthasOnOld then
       print('Turning on the Berthas')
-	end
-	print('Berthas running')
+    end
+    print('Berthas running')
   else
     if berthasOn ~= berthasOnOld then
       print('Turning off the Berthas')
     end
-	print('Berthas on standby')
-  end
+    print('Berthas on standby')
   if hughmungusOn == 1 then
     if hughmungusOn ~= hughmungusOnOld then
       print('Turning on Dicker Gustav')
-	end
-	print('Dicker Gustav running')
+    end
+    print('Dicker Gustav running')
   else
     if hughmungusOn ~= hughmungusOnOld then
       print('Turning off Dicker Gustav')
 	end
-      print('Dicker Gustav on standby')
+    print('Dicker Gustav on standby')
   end
   --Redstone Werte Setzen
   rsBerthas.setOutput(sides.left, berthasRedstoneStrength)
