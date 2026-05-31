@@ -1,9 +1,9 @@
 local term = require('term')
 
 -- Takt Zyklus und Zeit-Konstanten
-local WAITTIME = 60 --takt-zyklus 1min
-local N = 60/WAITTIME*60*24*7  --Takt Zyklen in einer Woche
-local N1 = 60/WAITTIME*60*24   --Takt Zyklen an einem Tag
+local WAITTIME = 1 --takt-zyklus 1min
+local N = 60*24*7  --Takt Zyklen in einer Woche
+local N1 = 60*24   --Takt Zyklen an einem Tag
 
 -- Redstone Schwellwerte
 local berthasThresholdOn = 1
