@@ -42,10 +42,10 @@ for i = 0, (N-1) do
   hughmungusOnCyclesWeek[i] = 0
 end
 
-while nCycles <= 10 do
+while nCycles <= 4 do
   term.clear()
   print('Executing Power Management Cycle No. ' .. tostring(nCycles))
-  redstoneStrength = 10
+  redstoneStrength = 1+(nCycles-1)*7
   print()
   print('Energy Level: ' .. tostring(redstoneStrength) .. '/15')
   --Einschalten oder Ausschalten?
