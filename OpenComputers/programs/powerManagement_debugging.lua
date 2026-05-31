@@ -19,7 +19,7 @@ hughmungusOnOld = 0
 berthasRedstoneStrength = 0
 hughmungusRedstoneStrength = 0
 redstoneStrength = 0
-nCycles = 0
+nCycles = 1
 berthasOnCycles = 0
 berthasOnCyclesWeek = {}
 berthasOnDay = 0
@@ -63,6 +63,14 @@ while nCycles <= 10 do
   hughmungusOn = 0
   hughmungusRedstoneStrength = 0
   end
+
+  --Berechne Standzeiten
+  berthasOnCycles = berthasOnCycles + berthasOn
+  hughmungusOnCycles = hughmungusOnCycles + hughmungusOn
+  --Berechne mittlere Standzeiten
+  -- + 1e-12 verhindert 0/0
+  berthasOnAVG = berthasOnCycles / (nCycles + 1e-12) * 100  
+  hughmungusOnAVG = hughmungusOnCycles / (nCycles + 1e-12) * 100
   --Berechne Standzeit vom letzten Tag  
   berthasOnDay = 0
   hughmungusOnDay = 0
@@ -72,13 +80,6 @@ while nCycles <= 10 do
   end
   berthasOnAVGDay = berthasOnDay / N1 * 100
   hughmungusOnAVGDay = hughmungusOnDay / N1 * 100
-  --Berechne Standzeiten
-  berthasOnCycles = berthasOnCycles + berthasOn
-  hughmungusOnCycles = hughmungusOnCycles + hughmungusOn
-  --Berechne mittlere Standzeiten
-  -- + 1e-12 verhindert 0/0
-  berthasOnAVG = berthasOnCycles / (nCycles + 1e-12) * 100  
-  hughmungusOnAVG = hughmungusOnCycles / (nCycles + 1e-12) * 100
   --Berechne Standzeit von der letzten Woche  
   berthasOnWeek = 0
   hughmungusOnWeek = 0
@@ -88,7 +89,8 @@ while nCycles <= 10 do
   end
   berthasOnAVGWeek = berthasOnWeek / N * 100
   hughmungusOnAVGWeek = hughmungusOnWeek / N * 100
-  -- z-Verschiebung; Index gespiegelt, dass nur die Alten Werte verloren gehen
+  --Bewegtes Fenster
+  --Wirf letztes Element raus und schiebe alles um 1
   for i = 0, (N-2) do
     z = N-2 - i
     berthasOnCyclesWeek[z+1] = berthasOnCyclesWeek
