@@ -83,8 +83,8 @@ while nCycles <= 4 do
   if nCycles < N1 then
     dayDiv = nCycles  
   end
-  berthasOnAVGDay = berthasOnDay / daydiv * 100
-  hughmungusOnAVGDay = hughmungusOnDay / daydiv * 100
+  berthasOnAVGDay = berthasOnDay / dayDiv * 100
+  hughmungusOnAVGDay = hughmungusOnDay / dayDiv * 100
   --Berechne Standzeit von der letzten Woche  
   berthasOnWeek = 0
   hughmungusOnWeek = 0
