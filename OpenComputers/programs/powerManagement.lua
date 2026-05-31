@@ -78,6 +78,13 @@ while nCycles <= 10 do
   end
   berthasOnAVGDay = berthasOnDay / N1 * 100
   hughmungusOnAVGDay = hughmungusOnDay / N1 * 100
+  --Berechne Standzeiten
+  berthasOnCycles = berthasOnCycles + berthasOn
+  hughmungusOnCycles = hughmungusOnCycles + hughmungusOn
+  --Berechne mittlere Standzeiten
+  -- + 1e-12 verhindert 0/0
+  berthasOnAVG = berthasOnCycles / (nCycles + 1e-12) * 100  
+  hughmungusOnAVG = hughmungusOnCycles / (nCycles + 1e-12) * 100
   --Berechne Standzeit von der letzten Woche  
   berthasOnWeek = 0
   hughmungusOnWeek = 0
@@ -122,13 +129,6 @@ while nCycles <= 10 do
   --Redstone Werte Setzen
   rsBerthas.setOutput(sides.left, berthasRedstoneStrength)
   rsHughmungus.setOutput(sides.front, hughmungusRedstoneStrength)
-  --Berechne Standzeiten
-  berthasOnCycles = berthasOnCycles + berthasOn
-  hughmungusOnCycles = hughmungusOnCycles + hughmungusOn
-  --Berechne mittlere Standzeiten
-  -- + 1e-12 verhindert 0/0
-  berthasOnAVG = berthasOnCycles / (nCycles + 1e-12) * 100  
-  hughmungusOnAVG = hughmungusOnCycles / (nCycles + 1e-12) * 100
   --Statistik Anzeigen
   print()
   print('Berthas running time relative: ' .. tostring(math.floor(berthasOnAVG*100)/100) .. '%')
