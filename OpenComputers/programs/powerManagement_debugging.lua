@@ -93,7 +93,7 @@ while nCycles <= 4 do
   --Wirf letztes Element raus und schiebe alles um 1
   for i = 0, (N-2) do
     z = N-2 - i
-    berthasOnCyclesWeek[z+1] = berthasOnCyclesWeek
+    berthasOnCyclesWeek[z+1] = berthasOnCyclesWeek[z]
     hughmungusOnCyclesWeek[z+1] = hughmungusOnCyclesWeek[z]
   end
   berthasOnCyclesWeek[0] = berthasOn
