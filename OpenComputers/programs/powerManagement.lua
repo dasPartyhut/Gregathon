@@ -7,9 +7,9 @@ local rsBerthas = component.proxy(component.get("31360f7e"))
 local rs Hughmungus = component.proxy(component.get("be40fe8f"))
 
 -- Takt Zyklus und Zeit-Konstanten
-local WAITTIME = 1 --takt-zyklus 1min
-local N = 60*24*7  --Takt Zyklen in einer Woche
-local N1 = 60*24   --Takt Zyklen an einem Tag
+local WAITTIME = 60 --takt-zyklus 1min
+local N = 60/WAITTIME*60*24*7  --Takt Zyklen in einer Woche
+local N1 = 60/WAITTIME*60*24   --Takt Zyklen an einem Tag
 
 -- Redstone Schwellwerte
 local berthasThresholdOn = 1
@@ -25,7 +25,7 @@ hughmungusOnOld = 0
 berthasRedstoneStrength = 0
 hughmungusRedstoneStrength = 0
 redstoneStrength = 0
-nCycles = 0
+nCycles = 1
 berthasOnCycles = 0
 berthasOnCyclesWeek = {}
 berthasOnDay = 0
@@ -48,9 +48,10 @@ for i = 0, (N-1) do
   hughmungusOnCyclesWeek[i] = 0
 end
 
-while nCycles <= 10 do
+while 1 do
   term.clear()
   print('Executing Power Management Cycle No. ' .. tostring(nCycles))
+  --Energieniveau der Kondensatorbank auslesen
   redstoneStrength = rsCapacitor.getInput(sides.up)
   print()
   print('Energy Level: ' .. tostring(redstoneStrength) .. '/15')
@@ -69,15 +70,18 @@ while nCycles <= 10 do
   hughmungusOn = 0
   hughmungusRedstoneStrength = 0
   end
-  --Berechne Standzeit vom letzten Tag  
-  berthasOnDay = 0
-  hughmungusOnDay = 0
-  for i = 0, (N1-1) do
-    berthasOnDay = berthasOnDay + berthasOnCyclesWeek[i]
-    hughmungusOnDay = hughmungusOnDay + hughmungusOnCyclesWeek[i]
+  --Redstone Werte Setzen
+  rsBerthas.setOutput(sides.left, berthasRedstoneStrength)
+  rsHughmungus.setOutput(sides.front, hughmungusRedstoneStrength)
+ --Bewegtes Fenster
+  --Wirf letztes Element raus und schiebe alles um 1
+  for i = 0, (N-2) do
+    z = N-2 - i
+    berthasOnCyclesWeek[z+1] = berthasOnCyclesWeek[z]
+    hughmungusOnCyclesWeek[z+1] = hughmungusOnCyclesWeek[z]
   end
-  berthasOnAVGDay = berthasOnDay / N1 * 100
-  hughmungusOnAVGDay = hughmungusOnDay / N1 * 100
+  berthasOnCyclesWeek[0] = berthasOn
+  hughmungusOnCyclesWeek[0] = hughmungusOn
   --Berechne Standzeiten
   berthasOnCycles = berthasOnCycles + berthasOn
   hughmungusOnCycles = hughmungusOnCycles + hughmungusOn
@@ -85,23 +89,34 @@ while nCycles <= 10 do
   -- + 1e-12 verhindert 0/0
   berthasOnAVG = berthasOnCycles / (nCycles + 1e-12) * 100  
   hughmungusOnAVG = hughmungusOnCycles / (nCycles + 1e-12) * 100
+  --Berechne Standzeit vom letzten Tag  
+  berthasOnDay = 0
+  hughmungusOnDay = 0
+  for i = 0, (N1-1) do
+    berthasOnDay = berthasOnDay + berthasOnCyclesWeek[i]
+    hughmungusOnDay = hughmungusOnDay + hughmungusOnCyclesWeek[i]
+    if i == (nCycles-1) then break end
+  end
+  dayDiv = N1
+  if nCycles < N1 then
+    dayDiv = nCycles  
+  end
+  berthasOnAVGDay = berthasOnDay / dayDiv * 100
+  hughmungusOnAVGDay = hughmungusOnDay / dayDiv * 100
   --Berechne Standzeit von der letzten Woche  
   berthasOnWeek = 0
   hughmungusOnWeek = 0
   for i = 0, (N-1) do
     berthasOnWeek = berthasOnWeek + berthasOnCyclesWeek[i]
     hughmungusOnWeek = hughmungusOnWeek + hughmungusOnCyclesWeek[i]
+    if i == (nCycles-1) then break end
   end
-  berthasOnAVGWeek = berthasOnWeek / N * 100
-  hughmungusOnAVGWeek = hughmungusOnWeek / N * 100
-  -- z-Verschiebung; Index gespiegelt, dass nur die Alten Werte verloren gehen
-  for i = 0, (N-2) do
-    z = N-2 - i
-    berthasOnCyclesWeek[z+1] = berthasOnCyclesWeek
-    hughmungusOnCyclesWeek[z+1] = hughmungusOnCyclesWeek[z]
+  weekDiv = N
+  if nCycles < N then
+    weekDiv = nCycles
   end
-  berthasOnCyclesWeek[0] = berthasOn
-  hughmungusOnCyclesWeek[0] = hughmungusOn
+  berthasOnAVGWeek = berthasOnWeek / weekDiv * 100
+  hughmungusOnAVGWeek = hughmungusOnWeek / weekDiv * 100
   --Status melden
   if berthasOn == 1 then
     if berthasOn ~= berthasOnOld then
@@ -125,9 +140,6 @@ while nCycles <= 10 do
     end
     print('Dicker Gustav on standby')
   end
-  --Redstone Werte Setzen
-  rsBerthas.setOutput(sides.left, berthasRedstoneStrength)
-  rsHughmungus.setOutput(sides.front, hughmungusRedstoneStrength)
   --Statistik Anzeigen
   print()
   print('Berthas running time relative: ' .. tostring(math.floor(berthasOnAVG*100)/100) .. '%')
@@ -137,8 +149,11 @@ while nCycles <= 10 do
   print('Dicker Gustav running time relative: ' .. tostring(math.floor(hughmungusOnAVG*100)/100) .. '%')
   print('Dicker Gustav running time AVG Day: ' .. tostring(math.floor(hughmungusOnAVGDay*100)/100) .. '%')
   print('Dicker Gustav running time AVG Week: ' .. tostring(math.floor(hughmungusOnAVGWeek*100)/100) .. '%')
+  --Vergangenheits Werte absichern
   berthasOnOld = berthasOn
   hughmungusOnOld = hughmungusOn
+  --Zyklen Zähler inkrementieren
   nCycles = nCycles + 1
+  --Mimimimi
   os.sleep(WAITTIME)
 end
