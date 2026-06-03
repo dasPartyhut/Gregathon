@@ -48,7 +48,7 @@ function runLoop()
     end
 while runLoop() do
   term.clear()
-  print('Executing Reactor Management Cycle No. ' .. tostring(ncCycles))
+  print('Executing Reactor Management Cycle No. ' .. tostring(nCycles))
   print()
   storedHelium = rsTank.getInput(sides.up)
   reactorEnergy = rsStoredEnergy.getInput(sides.down)
